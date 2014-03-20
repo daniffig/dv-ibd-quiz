@@ -6,9 +6,10 @@
 
     <uses-sdk
         android:minSdkVersion="8"
-        android:targetSdkVersion="18" />
+        android:targetSdkVersion="19" />
 
     <application
+        android:name="com.orm.SugarApp"
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
@@ -22,6 +23,20 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name="com.dvorakdev.ibdquiz.QuizActivity"
+            android:label="@string/title_activity_quiz"
+            android:parentActivityName="com.dvorakdev.ibdquiz.MainActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.dvorakdev.ibdquiz.MainActivity" />
+        </activity>
+        
+        <!-- Sugar ORM -->
+		<meta-data android:name="DATABASE" android:value="ibdquiz.db" />
+		<meta-data android:name="VERSION" android:value="2" />
+		<meta-data android:name="QUERY_LOG" android:value="true" />
+		<meta-data android:name="DOMAIN_PACKAGE_NAME" android:value="com.dvorakdev.ibdquiz.model" />
     </application>
 
 </manifest>
