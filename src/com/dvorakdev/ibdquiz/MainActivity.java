@@ -1,12 +1,10 @@
 package com.dvorakdev.ibdquiz;
 
-import com.dvorakdev.ibdquiz.model.QuizQuestion;
-
 import android.os.Bundle;
 import android.app.Activity;
+import android.content.Intent;
 import android.view.Menu;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
+import android.view.View;
 
 public class MainActivity extends Activity {
 
@@ -15,25 +13,7 @@ public class MainActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 		
-		for (int i = 0; i < 10; i++)
-		{
-			QuizQuestion aQuizQuestion = new QuizQuestion();
-			
-			aQuizQuestion.setQuestion(String.format("QuizQuestion %d", i));
-			
-			aQuizQuestion.save();
-		}
-		
-		RadioGroup quizQuestionRadioGroup = (RadioGroup) this.findViewById(R.id.quizQuestionRadioGroup);
-		
-		for (QuizQuestion aQuizQuestion : QuizQuestion.all())
-		{
-			RadioButton aRadioButton = new RadioButton(this);
-			
-			aRadioButton.setText(aQuizQuestion.getQuestion());
-			
-			quizQuestionRadioGroup.addView(aRadioButton);
-		}
+		Spinner quizSpinner = this.findViewById(R.id.quizSpinner)
 	}
 
 	@Override
@@ -41,6 +21,11 @@ public class MainActivity extends Activity {
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.main, menu);
 		return true;
+	}
+	
+	public void openQuiz(View view)
+	{
+		this.startActivity(new Intent(this, QuizActivity.class));
 	}
 
 }

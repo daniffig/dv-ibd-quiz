@@ -26,6 +26,6 @@ public class Quiz extends Model {
     
     public static List<Quiz> all()
     {
-    	return Quiz.all(Quiz.class);
+    	return Model.all(Quiz.class);
     }
 }

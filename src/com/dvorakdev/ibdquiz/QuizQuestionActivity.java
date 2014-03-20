@@ -1,47 +1,19 @@
 package com.dvorakdev.ibdquiz;
 
-import com.dvorakdev.ibdquiz.model.QuizQuestion;
-
 import android.os.Bundle;
 import android.app.Activity;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
 import android.support.v4.app.NavUtils;
 import android.annotation.TargetApi;
-import android.graphics.Color;
 import android.os.Build;
 
-public class QuizActivity extends Activity {
+public class QuizQuestionActivity extends Activity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_quiz);
-		
-		QuizQuestion.truncate();
-		
-		for (int i = 0; i < 10; i++)
-		{
-			QuizQuestion aQuizQuestion = new QuizQuestion();
-			
-			aQuizQuestion.setQuestion(String.format("QuizQuestion %d", i));
-			
-			aQuizQuestion.save();
-		}
-		
-		RadioGroup quizQuestionRadioGroup = (RadioGroup) this.findViewById(R.id.quizAnswerRadioGroup);
-		
-		for (QuizQuestion aQuizQuestion : QuizQuestion.all())
-		{
-			RadioButton aRadioButton = new RadioButton(this.getBaseContext());
-			
-			aRadioButton.setText(aQuizQuestion.getQuestion());
-			aRadioButton.setTextColor(Color.BLACK);
-			
-			quizQuestionRadioGroup.addView(aRadioButton);
-		}
+		setContentView(R.layout.activity_quiz_question);
 		// Show the Up button in the action bar.
 		setupActionBar();
 	}
@@ -59,7 +31,7 @@ public class QuizActivity extends Activity {
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.quiz, menu);
+		getMenuInflater().inflate(R.menu.quiz_question, menu);
 		return true;
 	}
 

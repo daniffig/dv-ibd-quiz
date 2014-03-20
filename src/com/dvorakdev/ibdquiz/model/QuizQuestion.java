@@ -11,7 +11,7 @@ public class QuizQuestion extends Model {
 	@Column(name = "Quiz")
 	private Quiz quiz;
 	
-	@Column(name = "question")
+	@Column(name = "Question")
 	private String question;
 
 	@Column(name = "CorrectQuizAnswer")	
@@ -48,7 +48,12 @@ public class QuizQuestion extends Model {
     
     public static List<QuizQuestion> all()
     {
-    	return QuizQuestion.all(QuizQuestion.class);
+    	return Model.all(QuizQuestion.class);
+    }
+    
+    public static void truncate()
+    {
+    	Model.delete(QuizQuestion.class);
     }
 
 }

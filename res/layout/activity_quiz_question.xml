@@ -6,23 +6,26 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context=".MainActivity" >
+    tools:context=".QuizQuestionActivity" >
 
-    <Button
-        android:id="@+id/button1"
+    <TextView
+        android:id="@+id/quizQuestionTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/quizSpinner"
-        android:layout_centerHorizontal="true"
-        android:onClick="openQuiz"
-        android:text="Button" />
+        android:text="@string/hello_world" />
 
-    <Spinner
-        android:id="@+id/quizSpinner"
-        android:layout_width="wrap_content"
+    <ScrollView
+        android:id="@+id/quizAnswerScrollViewLayout"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="18dp" />
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true" >
+
+        <RadioGroup
+            android:id="@+id/quizAnswerRadioGroup"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
+        </RadioGroup>
+    </ScrollView>
 
 </RelativeLayout>

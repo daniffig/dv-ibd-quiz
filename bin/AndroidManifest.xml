@@ -13,8 +13,7 @@
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme" >        
-		
+        android:theme="@style/AppTheme" >
         <activity
             android:name="com.dvorakdev.ibdquiz.MainActivity"
             android:label="@string/app_name" >
@@ -32,9 +31,22 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.dvorakdev.ibdquiz.MainActivity" />
         </activity>
-        
-        <meta-data android:name="AA_DB_NAME" android:value="IBDQuiz.db" />
-        <meta-data android:name="AA_DB_VERSION" android:value="5" />
+
+        <meta-data
+            android:name="AA_DB_NAME"
+            android:value="IBDQuiz.db" />
+        <meta-data
+            android:name="AA_DB_VERSION"
+            android:value="5" />
+
+        <activity
+            android:name="com.dvorakdev.ibdquiz.QuizQuestionActivity"
+            android:label="@string/title_activity_quiz_question"
+            android:parentActivityName="com.dvorakdev.ibdquiz.QuizActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.dvorakdev.ibdquiz.QuizActivity" />
+        </activity>
     </application>
 
 </manifest>
