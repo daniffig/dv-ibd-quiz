@@ -1,10 +1,12 @@
 package com.dvorakdev.ibdquiz;
 
-import com.dvorakdev.ibdquiz.model.Quiz;
+import com.dvorakdev.ibdquiz.model.QuizQuestion;
 
 import android.os.Bundle;
 import android.app.Activity;
 import android.view.Menu;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 
 public class MainActivity extends Activity {
 
@@ -13,11 +15,25 @@ public class MainActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 		
-		Quiz aQuiz = new Quiz(this.getApplicationContext());
+		for (int i = 0; i < 10; i++)
+		{
+			QuizQuestion aQuizQuestion = new QuizQuestion();
+			
+			aQuizQuestion.setQuestion(String.format("QuizQuestion %d", i));
+			
+			aQuizQuestion.save();
+		}
 		
-		aQuiz.setName("Mi primer cuestionario");
+		RadioGroup quizQuestionRadioGroup = (RadioGroup) this.findViewById(R.id.quizQuestionRadioGroup);
 		
-		aQuiz.save();
+		for (QuizQuestion aQuizQuestion : QuizQuestion.all())
+		{
+			RadioButton aRadioButton = new RadioButton(this);
+			
+			aRadioButton.setText(aQuizQuestion.getQuestion());
+			
+			quizQuestionRadioGroup.addView(aRadioButton);
+		}
 	}
 
 	@Override

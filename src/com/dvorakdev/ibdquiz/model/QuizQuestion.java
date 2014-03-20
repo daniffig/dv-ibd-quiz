@@ -1,19 +1,36 @@
 package com.dvorakdev.ibdquiz.model;
 
-import java.util.Collection;
+import java.util.List;
 
-import android.content.Context;
+import com.activeandroid.Model;
+import com.activeandroid.annotation.*;
 
-import com.orm.SugarRecord;
-
-public class QuizQuestion extends SugarRecord<QuizQuestion> {
+@Table(name = "QuizQuestion")
+public class QuizQuestion extends Model {
 	
+	@Column(name = "Quiz")
 	private Quiz quiz;
-	private Collection<QuizAnswer> quizAnswers;
+	
+	@Column(name = "question")
+	private String question;
 
-	public QuizQuestion(Context arg0) {
-		super(arg0);
-		// TODO Auto-generated constructor stub
+	@Column(name = "CorrectQuizAnswer")	
+	private QuizAnswer correctQuizAnswer;
+	
+	public String getQuestion() {
+		return question;
+	}
+
+	public void setQuestion(String question) {
+		this.question = question;
+	}
+
+	public QuizAnswer getCorrectQuizAnswer() {
+		return correctQuizAnswer;
+	}
+
+	public void setCorrectQuizAnswer(QuizAnswer correctQuizAnswer) {
+		this.correctQuizAnswer = correctQuizAnswer;
 	}
 
 	public Quiz getQuiz() {
@@ -24,18 +41,14 @@ public class QuizQuestion extends SugarRecord<QuizQuestion> {
 		this.quiz = quiz;
 	}
 
-	public Collection<QuizAnswer> getQuizAnswers() {
-		return quizAnswers;
-	}
-
-	public void setQuizAnswers(Collection<QuizAnswer> quizAnswers) {
-		this.quizAnswers = quizAnswers;
-	}
-	
-	public void addQuizAnswer(QuizAnswer aQuizAnswer)
-	{
-		aQuizAnswer.setQuizQuestion(this);
-		this.getQuizAnswers().add(aQuizAnswer);
-	}
+    public List<QuizAnswer> getQuizAnswers()
+    {
+        return this.getMany(QuizAnswer.class, "QuizQuestion");
+    }
+    
+    public static List<QuizQuestion> all()
+    {
+    	return QuizQuestion.all(QuizQuestion.class);
+    }
 
 }
