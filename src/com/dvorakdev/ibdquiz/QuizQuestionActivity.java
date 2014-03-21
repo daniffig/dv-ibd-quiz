@@ -1,14 +1,26 @@
 package com.dvorakdev.ibdquiz;
 
+import com.dvorakdev.ibdquiz.model.QuizQuestion;
+import com.dvorakdev.ibdquiz.model.QuizQuestionAnswer;
+
 import android.os.Bundle;
 import android.app.Activity;
+import android.util.SparseArray;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
+import android.widget.TextView;
+import android.widget.Toast;
 import android.support.v4.app.NavUtils;
 import android.annotation.TargetApi;
+import android.graphics.Color;
 import android.os.Build;
 
 public class QuizQuestionActivity extends Activity {
+	
+	SparseArray<QuizQuestionAnswer> quizQuestionAnswerArray = new SparseArray<QuizQuestionAnswer>();
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -16,6 +28,34 @@ public class QuizQuestionActivity extends Activity {
 		setContentView(R.layout.activity_quiz_question);
 		// Show the Up button in the action bar.
 		setupActionBar();
+		
+		QuizQuestion selectedQuizQuestion = QuizQuestion.load(QuizQuestion.class, this.getApplicationContext().getSharedPreferences("IBDQuiz", 0).getLong("selectedQuizQuestion.id", -1));
+				
+		TextView quizQuestionTextView = (TextView) this.findViewById(R.id.quizQuestionTextView);		
+		RadioGroup quizQuestionAnswerRadioGroup = (RadioGroup) this.findViewById(R.id.quizQuestionAnswerRadioGroup);
+		
+		quizQuestionTextView.setText(selectedQuizQuestion.getQuestion());
+		
+		for (QuizQuestionAnswer aQuizQuestionAnswer : selectedQuizQuestion.getQuizQuestionAnswers())
+		{
+			RadioButton aRadioButton = new RadioButton(this);
+			
+			aRadioButton.setOnClickListener(new View.OnClickListener()
+			{
+				@Override
+				public void onClick(View v) {
+					// TODO Auto-generated method stub					
+					QuizQuestionActivity.this.checkQuizAnswer(v);
+				}				
+			});
+			
+			aRadioButton.setText(aQuizQuestionAnswer.getAnswer());
+			aRadioButton.setTextColor(Color.BLACK);
+			
+			quizQuestionAnswerArray.put(aRadioButton.hashCode(), aQuizQuestionAnswer);
+			
+			quizQuestionAnswerRadioGroup.addView(aRadioButton);
+		}
 	}
 
 	/**
@@ -50,6 +90,29 @@ public class QuizQuestionActivity extends Activity {
 			return true;
 		}
 		return super.onOptionsItemSelected(item);
+	}
+	
+	private void checkQuizAnswer(View view)
+	{
+		RadioGroup quizQuestionAnswerRadioGroup = (RadioGroup) this.findViewById(R.id.quizQuestionAnswerRadioGroup);
+		
+		if (quizQuestionAnswerRadioGroup.getCheckedRadioButtonId() == -1)
+		{
+			//	TODO i18n
+			Toast.makeText(this.getApplicationContext(), "Debe seleccionar una respuesta.", Toast.LENGTH_SHORT).show();
+		}
+		else
+		{			
+			QuizQuestionAnswer selectedQuizQuestionAnswer = quizQuestionAnswerArray.get(this.findViewById(quizQuestionAnswerRadioGroup.getCheckedRadioButtonId()).hashCode());
+			
+			if (selectedQuizQuestionAnswer.isCorrect())
+			{
+				//	TODO i18n
+				Toast.makeText(this.getApplicationContext(), "¡Respuesta correcta!", Toast.LENGTH_SHORT).show();
+				
+				this.finish();
+			}
+		}		
 	}
 
 }

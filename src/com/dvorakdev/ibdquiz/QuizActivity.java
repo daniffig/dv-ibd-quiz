@@ -1,49 +1,52 @@
 package com.dvorakdev.ibdquiz;
 
+import com.dvorakdev.ibdquiz.model.Quiz;
 import com.dvorakdev.ibdquiz.model.QuizQuestion;
 
 import android.os.Bundle;
 import android.app.Activity;
+import android.util.SparseArray;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.TextView;
 import android.support.v4.app.NavUtils;
 import android.annotation.TargetApi;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
 
 public class QuizActivity extends Activity {
-
+	
+	SparseArray<QuizQuestion> quizQuestionArray = new SparseArray<QuizQuestion>();
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_quiz);
+		// Show the Up button in the action bar.
+		//setupActionBar();
 		
-		QuizQuestion.truncate();
+		Quiz selectedQuiz = Quiz.load(Quiz.class, this.getApplicationContext().getSharedPreferences("IBDQuiz", 0).getLong("selectedQuiz.id", -1));
 		
-		for (int i = 0; i < 10; i++)
+		TextView quizNameTextView = (TextView) this.findViewById(R.id.quizNameTextView);		
+		RadioGroup quizQuestionRadioGroup = (RadioGroup) this.findViewById(R.id.quizQuestionRadioGroup);
+		
+		quizNameTextView.setText(selectedQuiz.getName());
+		
+		for (QuizQuestion aQuizQuestion : selectedQuiz.getQuizQuestions())
 		{
-			QuizQuestion aQuizQuestion = new QuizQuestion();
-			
-			aQuizQuestion.setQuestion(String.format("QuizQuestion %d", i));
-			
-			aQuizQuestion.save();
-		}
-		
-		RadioGroup quizQuestionRadioGroup = (RadioGroup) this.findViewById(R.id.quizAnswerRadioGroup);
-		
-		for (QuizQuestion aQuizQuestion : QuizQuestion.all())
-		{
-			RadioButton aRadioButton = new RadioButton(this.getBaseContext());
+			RadioButton aRadioButton = new RadioButton(this);
 			
 			aRadioButton.setText(aQuizQuestion.getQuestion());
 			aRadioButton.setTextColor(Color.BLACK);
 			
+			quizQuestionArray.put(aRadioButton.hashCode(), aQuizQuestion);
+			
 			quizQuestionRadioGroup.addView(aRadioButton);
 		}
-		// Show the Up button in the action bar.
-		setupActionBar();
 	}
 
 	/**
@@ -78,6 +81,24 @@ public class QuizActivity extends Activity {
 			return true;
 		}
 		return super.onOptionsItemSelected(item);
+	}
+	
+	public void openQuizQuestion(View view)
+	{
+		RadioGroup quizQuestionRadioGroup = (RadioGroup) this.findViewById(R.id.quizQuestionRadioGroup);
+		
+		if (quizQuestionRadioGroup.getCheckedRadioButtonId() == -1)
+		{
+			
+		}
+		else
+		{
+			QuizQuestion selectedQuizQuestion = quizQuestionArray.get(this.findViewById(quizQuestionRadioGroup.getCheckedRadioButtonId()).hashCode());	
+			
+			this.getApplicationContext().getSharedPreferences("IBDQuiz", 0).edit().putLong("selectedQuizQuestion.id", selectedQuizQuestion.getId()).commit();
+			
+			//this.startActivity(new Intent(this, QuizQuestionActivity.class));
+		}
 	}
 
 }

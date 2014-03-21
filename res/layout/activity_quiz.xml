@@ -1,5 +1,6 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/ScrollView1"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:paddingBottom="@dimen/activity_vertical_margin"
@@ -8,18 +9,29 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".QuizActivity" >
 
-    <ScrollView
-        android:id="@+id/quizAnswerScrollViewLayout"
+    <LinearLayout
+        android:id="@+id/quizLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true" >
+        android:orientation="vertical" >
+
+        <TextView
+            android:id="@+id/quizNameTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
 
         <RadioGroup
-            android:id="@+id/quizAnswerRadioGroup"
+            android:id="@+id/quizQuestionRadioGroup"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" >
         </RadioGroup>
-    </ScrollView>
 
-</RelativeLayout>
+        <Button
+            android:id="@+id/button1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="openQuizQuestion"
+            android:text="Button" />
+    </LinearLayout>
+
+</ScrollView>
